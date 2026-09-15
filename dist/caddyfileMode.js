@@ -14,7 +14,7 @@
 // that research by hand. rouge-lexer-caddyfile is MIT licensed; see LICENSE
 // and NOTICE in this repository.
 //
-// Generated 2026-09-15T13:37:57Z from rouge-lexer-caddyfile v0.1.0.
+// Generated 2026-09-15T13:50:01Z from rouge-lexer-caddyfile v0.1.0.
 //
 // The state machine below (how a line's first word is classified, how
 // blocks/matchers/quotes/heredocs are tracked) is a hand-written, rarely
