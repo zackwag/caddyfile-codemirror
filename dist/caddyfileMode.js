@@ -14,7 +14,7 @@
 // that research by hand. rouge-lexer-caddyfile is MIT licensed; see LICENSE
 // and NOTICE in this repository.
 //
-// Generated 2026-09-15T13:33:31Z from rouge-lexer-caddyfile v0.1.0.
+// Generated 2026-09-15T13:37:57Z from rouge-lexer-caddyfile v0.1.0.
 //
 // The state machine below (how a line's first word is classified, how
 // blocks/matchers/quotes/heredocs are tracked) is a hand-written, rarely
@@ -117,6 +117,15 @@ function readHeredoc(stream, state) {
 // Rules shared by args / gargs / margs (the "rest of line" states).
 function readArgCommon(stream, state) {
     if (stream.eatSpace()) return null;
+    if (stream.match(OPEN_BLOCK)) {
+        // Nested block: args (root context) doesn't push -- a directive's own
+        // block reuses root's vocabulary. gargs/margs push a fresh frame of
+        // their own context so the matching close brace pops the right depth.
+        if (state.mode === "gargs") state.stack.push("global");
+        else if (state.mode === "margs") state.stack.push("matcher");
+        state.mode = "line";
+        return null;
+    }
     if (stream.match(/^\\$/)) { state.continuation = true; return null; }
     if (stream.match(/^#.*/)) return "comment";
     if (stream.eat(",")) return null;
