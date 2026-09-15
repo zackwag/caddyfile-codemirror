@@ -5,6 +5,12 @@ for the [Caddyfile](https://caddyserver.com/docs/caddyfile) format, the
 configuration format used by the [Caddy](https://caddyserver.com/) web
 server.
 
+> **Credit:** the Caddyfile keyword vocabulary that makes this useful comes
+> from [**Sean Whalen**](https://github.com/seanthegeek)'s
+> [**rouge-lexer-caddyfile**](https://github.com/seanthegeek/rouge-lexer-caddyfile),
+> synced here automatically every day. This repo just translates it to
+> CodeMirror's API — see [Credit](#credit) below for details.
+
 ## Credit
 
 The Caddyfile keyword vocabulary here (directive names, global options,
