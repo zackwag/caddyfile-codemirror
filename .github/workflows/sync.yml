@@ -7,6 +7,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   sync:
@@ -22,15 +23,37 @@ jobs:
       - name: Generate CodeMirror mode from latest gem
         run: bundle exec ruby script/generate.rb
 
-      - name: Commit and push if changed
+      - name: Open PR if changed
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           if git diff --quiet -- dist/; then
             echo "No vocabulary changes."
             exit 0
           fi
           version=$(cat dist/VERSION)
+          branch="sync/v${version}"
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$branch"
           git add dist/
-          git commit -m "sync: rouge-lexer-caddyfile v${version}"
-          git push
+          git commit -m "chore(sync): update rouge-lexer-caddyfile to v${version}"
+          git push origin "$branch"
+
+          gh pr create --title "chore(sync): update rouge-lexer-caddyfile to v${version}" \
+            --body "Automated daily vocabulary sync." --base main --head "$branch"
+
+          pr_number=$(gh pr list --head "$branch" --json number -q '.[0].number')
+          for i in $(seq 1 40); do
+            pending=$(gh pr view "$pr_number" --json statusCheckRollup -q '[.statusCheckRollup[] | select(.status!="COMPLETED")] | length')
+            if [ "$pending" = "0" ]; then break; fi
+            sleep 15
+          done
+
+          bad=$(gh pr view "$pr_number" --json statusCheckRollup -q '[.statusCheckRollup[] | select((.conclusion // "") | IN("SUCCESS","NEUTRAL","SKIPPED") | not)] | length')
+          if [ "$bad" != "0" ]; then
+            echo "::error::$bad check(s) did not succeed; leaving PR #$pr_number open for review."
+            exit 1
+          fi
+
+          gh pr merge "$pr_number" --squash --delete-branch
