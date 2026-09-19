@@ -3,7 +3,7 @@ GEM
   specs:
     rouge (5.1.0)
       strscan (~> 3.1)
-    rouge-lexer-caddyfile (0.1.0)
+    rouge-lexer-caddyfile (0.2.0)
       rouge (>= 3.4)
     strscan (3.1.8)
 
@@ -16,7 +16,7 @@ DEPENDENCIES
 
 CHECKSUMS
   rouge (5.1.0) sha256=b77c632842ab7f5147940212f0345808cccfbce864fd5b631d7d12a35ac85452
-  rouge-lexer-caddyfile (0.1.0) sha256=281d5489ea9098f5c145d9759cec4882cc7dc8058ada51809ca0f3fd9081744a
+  rouge-lexer-caddyfile (0.2.0) sha256=fa206483ba2f70e6fe08211c20a6c25a9c4cfa2225faf46b03cfb628ec46ab1d
   strscan (3.1.8) sha256=aae2db611a225559f21ffbb71765c9a4e60fd262534a9ea84f4f11c7f32f679e
 
 BUNDLED WITH
