@@ -15,6 +15,7 @@ DEPENDENCIES
   rouge-lexer-caddyfile
 
 CHECKSUMS
+  bundler (4.0.20) sha256=7978a8ac648767f5e635bc522445b79e80a52b907a39a36c2d8085ed6bc762ae
   rouge (5.1.0) sha256=b77c632842ab7f5147940212f0345808cccfbce864fd5b631d7d12a35ac85452
   rouge-lexer-caddyfile (0.2.0) sha256=fa206483ba2f70e6fe08211c20a6c25a9c4cfa2225faf46b03cfb628ec46ab1d
   strscan (3.1.8) sha256=aae2db611a225559f21ffbb71765c9a4e60fd262534a9ea84f4f11c7f32f679e
