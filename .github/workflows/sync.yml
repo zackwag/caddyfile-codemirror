@@ -22,7 +22,9 @@ jobs:
           bundler-cache: true
 
       - name: Update to latest rouge-lexer-caddyfile
-        run: bundle update rouge-lexer-caddyfile
+        run: |
+          bundle config set frozen false
+          bundle update rouge-lexer-caddyfile
 
       - name: Generate CodeMirror mode from latest gem
         run: bundle exec ruby script/generate.rb
